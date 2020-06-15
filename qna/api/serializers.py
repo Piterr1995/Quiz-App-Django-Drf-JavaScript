@@ -5,7 +5,7 @@ from qna.models import Question, Answer
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = ("text",)
+        fields = ("id", "text")
 
 
 class QuestionSerializer(serializers.ModelSerializer):
