@@ -13,6 +13,7 @@ class Answer(models.Model):
         Question, on_delete=models.CASCADE, related_name="answers"
     )
     text = models.CharField(max_length=50)
+    correct = models.BooleanField(default=False)
 
     def __str__(self):
         return self.question.text

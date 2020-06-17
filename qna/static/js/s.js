@@ -73,11 +73,11 @@ chuj.addEventListener("click", () => {
 });
 
 var submitButton = document.querySelector(".submit-button");
-submitButton.addEventListener("click", () => {
+
+submitButton.addEventListener("click", async () => {
   var url = "http://127.0.0.1:8000/quiz/answer/";
 
   var answer = document.querySelector(".active").innerHTML;
-  debugger;
   fetch(url, {
     method: "POST",
     headers: {
@@ -88,6 +88,16 @@ submitButton.addEventListener("click", () => {
       answer: answer,
     }),
   }).then((res) => console.log(res));
-
-  $(".wrapper").fadeOut();
+  $(".wrapper").fadeOut(250, () => {
+    currentQuestionNumber++;
+    removeCurrentAnswers();
+  });
 });
+
+var removeCurrentAnswers = () => {
+  document
+    .querySelectorAll(".list-group-item")
+    .forEach((item) => item.remove());
+  getQuestionWithAnswers(currentQuestionNumber);
+  $(".wrapper").fadeIn();
+};
