@@ -62,8 +62,10 @@ var getQuestionWithAnswers = (number) => {
 
 startButton.addEventListener("click", () => {
   $(startButton).fadeOut();
-  $(startHeader).fadeOut();
-  $(wrapper).fadeIn();
+  $(startHeader).fadeOut("slow", () => {
+    $(wrapper).fadeIn();
+  });
+
   getQuestionWithAnswers(currentQuestionNumber);
 });
 
@@ -74,7 +76,7 @@ chuj.addEventListener("click", () => {
 
 var submitButton = document.querySelector(".submit-button");
 
-submitButton.addEventListener("click", async () => {
+submitButton.addEventListener("click", () => {
   var url = "http://127.0.0.1:8000/quiz/answer/";
 
   var answer = document.querySelector(".active").innerHTML;
@@ -87,10 +89,16 @@ submitButton.addEventListener("click", async () => {
     body: JSON.stringify({
       answer: answer,
     }),
-  }).then((res) => console.log(res));
+  })
+    .then((res) => res.json())
+    .then((data) => console.log(data));
   $(".wrapper").fadeOut(250, () => {
-    currentQuestionNumber++;
-    removeCurrentAnswers();
+    if (currentQuestionNumber == dataset.length - 1) {
+      alert("finished");
+    } else {
+      currentQuestionNumber++;
+      removeCurrentAnswers();
+    }
   });
 });
 
@@ -101,3 +109,5 @@ var removeCurrentAnswers = () => {
   getQuestionWithAnswers(currentQuestionNumber);
   $(".wrapper").fadeIn();
 };
+
+debugger;
