@@ -69,11 +69,6 @@ startButton.addEventListener("click", () => {
   getQuestionWithAnswers(currentQuestionNumber);
 });
 
-var chuj = document.querySelector(".chuj");
-chuj.addEventListener("click", () => {
-  alert("chuj");
-});
-
 var submitButton = document.querySelector(".submit-button");
 
 submitButton.addEventListener("click", () => {
@@ -91,20 +86,39 @@ submitButton.addEventListener("click", () => {
     }),
   })
     .then((res) => res.json())
-    .then((data) => console.log(data));
-  $(".wrapper").fadeOut(250, () => {
-    if (currentQuestionNumber == dataset.length - 1) {
-    } else {
-      currentQuestionNumber++;
-      removeCurrentAnswers();
-    }
-  });
+    .then((data) => {
+      // console.log(data);
+      // var score = data.body.score;
+      $(".wrapper").fadeOut(250, (score = data.body.score) => {
+        if (currentQuestionNumber == dataset.length - 1) {
+          removeCurrentAnswers();
+          document.querySelector(".quiz-question").remove();
+          document.querySelector(".submit-button").remove();
+          var score = `
+            <h2 class="text-center text-white">Your score is ${score} / 10</h2>
+            <p class="text-white text-center">Do you want to <a href="/quiz/" class="text-white">try again?</a></p>
+          `;
+          document.querySelector(".wrapper").innerHTML += score;
+          $(".wrapper").fadeIn();
+          // debugger;
+          // alert(data.body.score);
+          // document.body.innerHTML += `
+          //   <h2 class="text-center>${data.body.score}</h2>
+          // `;
+        } else {
+          currentQuestionNumber++;
+          removeCurrentAnswers();
+          getQuestionWithAnswers(currentQuestionNumber);
+          $(".wrapper").fadeIn();
+        }
+      });
+    });
 });
 
 var removeCurrentAnswers = () => {
   document
     .querySelectorAll(".list-group-item")
     .forEach((item) => item.remove());
-  getQuestionWithAnswers(currentQuestionNumber);
-  $(".wrapper").fadeIn();
+  // getQuestionWithAnswers(currentQuestionNumber);
+  // $(".wrapper").fadeIn();
 };

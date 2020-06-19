@@ -33,3 +33,12 @@ h1 {
 .wrapper {
   display: none;
 }
+
+.list-group-item:hover {
+  cursor: pointer;
+  background-color: #fafafa;
+}
+
+.active {
+  pointer-events: none;
+}
