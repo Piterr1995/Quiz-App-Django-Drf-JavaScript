@@ -10,13 +10,14 @@ class QuizView(TemplateView):
     template_name = "qna/index.html"
 
 
+# answer_array is going to collect all user's answers
 answers_array = []
 correct_answers = [answer.text for answer in Answer.objects.filter(correct=True)]
 
 
 def answers(request: dict):
     """
-    Returns the score after question has been answered
+    Returns the score after the question has been answered
     """
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
