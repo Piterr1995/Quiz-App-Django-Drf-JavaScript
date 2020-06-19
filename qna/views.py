@@ -27,7 +27,8 @@ def answers(request):
         score = len([item for item in correct_answers if item in answers_array])
 
         if len(answers_array) == len(Question.objects.all()):
+            print("here")
             response = {"body": {"score": score}}
             return JsonResponse(data=response, status=200)
         else:
-            return JsonResponse(data={"body": {"score": score}}, status=200)
+            return JsonResponse(data={}, status=200)

@@ -94,7 +94,6 @@ submitButton.addEventListener("click", () => {
     .then((data) => console.log(data));
   $(".wrapper").fadeOut(250, () => {
     if (currentQuestionNumber == dataset.length - 1) {
-      alert("finished");
     } else {
       currentQuestionNumber++;
       removeCurrentAnswers();
@@ -109,5 +108,3 @@ var removeCurrentAnswers = () => {
   getQuestionWithAnswers(currentQuestionNumber);
   $(".wrapper").fadeIn();
 };
-
-debugger;
